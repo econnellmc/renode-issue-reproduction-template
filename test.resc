@@ -10,7 +10,7 @@ mach create
 
 machine LoadPlatformDescription @../test.repl
 
-mmuart1 SimulationFilePath @../Vtop_uart
+mmuart1 SimulationFilePath @../Vtop_16550
 showAnalyzer mmuart1
 
 macro reset
