@@ -6,3 +6,6 @@ robot_output.xml
 
 # artifacts directory
 artifacts
+
+build/
+renode_1.13.3_portable/

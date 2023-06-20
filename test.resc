@@ -3,18 +3,18 @@
 # Make this repository as self contained as possible.
 #
 
-$name?="Mi-V"
+logLevel 3
 
 using sysbus
-mach create $name
-machine LoadPlatformDescription @platforms/boards/miv-board.repl
+mach create
 
-$bin?=@https://dl.antmicro.com/projects/renode/shell-demo-miv.elf-s_803248-ea4ddb074325b2cc1aae56800d099c7cf56e592a
+machine LoadPlatformDescription @../test.repl
 
-showAnalyzer uart
+mmuart1 SimulationFilePath @../Vtop_uart
+showAnalyzer mmuart1
 
 macro reset
 """
-    sysbus LoadELF $bin
+    sysbus LoadELF @../test_UART.elf
 """
 runMacro $reset

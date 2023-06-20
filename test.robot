@@ -7,21 +7,16 @@ Resource                      ${RENODEKEYWORDS}
 
 *** Variables ***
 ${SCRIPT}                     ${CURDIR}/test.resc
-${UART}                       sysbus.uart
+${UART}                       sysbus.mmuart1
 
 
 *** Keywords ***
 Load Script
     Execute Script            ${SCRIPT}
-    Create Terminal Tester    ${UART}
-
+    Create Terminal Tester    sysbus.mmuart1
 
 *** Test Cases ***
 Should Run Test Case
     Load Script
     Start Emulation
-    Wait For Prompt On Uart     uart:~$
-    Write Line To Uart
-    Wait For Prompt On Uart     uart:~$
-    Write Line To Uart          demo ping
-    Wait For Line On Uart       pong
+    Wait For Line On Uart  **** PolarFire SoC MSS MMUART example ****
