@@ -1,27 +1,25 @@
 *** Settings ***
-Suite Setup                   Setup
-Suite Teardown                Teardown
-Test Setup                    Reset Emulation
-Test Teardown                 Test Teardown
-Resource                      ${RENODEKEYWORDS}
+Suite Setup     Setup
+Suite Teardown  Teardown
+Test Teardown   Test Teardown
+Resource        ${RENODEKEYWORDS}
 
 *** Variables ***
-${SCRIPT}                     ${CURDIR}/test.resc
-${UART}                       sysbus.uart
+${UART}                       sysbus.mmuart0
 
 
 *** Keywords ***
-Load Script
-    Execute Script            ${SCRIPT}
-    Create Terminal Tester    ${UART}
-
+Create Machine
+    Execute Command    $GDB_SERVER_PORT=3333
+    Execute Command    path add @${CURDIR}
+    Execute Command    path add @boards
+    Execute Command    i @scripts/polarfire-soc-icicle-board.resc
+    Execute Command    sysbus LoadELF @mpfs-mmuart-interrupt.elf
 
 *** Test Cases ***
-Should Run Test Case
-    Load Script
-    Start Emulation
-    Wait For Prompt On Uart     uart:~$
-    Write Line To Uart
-    Wait For Prompt On Uart     uart:~$
-    Write Line To Uart          demo ping
-    Wait For Line On Uart       pong
+Should Fail Test Case
+    [Timeout]    300
+    Create Machine
+    Create Terminal Tester    ${UART}
+    Execute Command    start
+    Wait For Next Line On Uart
