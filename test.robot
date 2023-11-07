@@ -12,12 +12,12 @@ ${UART}                       sysbus.mmuart0
 Create Machine
     Execute Command    $GDB_SERVER_PORT=3333
     Execute Command    path add @${CURDIR}
-    Execute Command    path add @boards
+    Execute Command    path add @boards_fix
     Execute Command    i @scripts/polarfire-soc-icicle-board.resc
     Execute Command    sysbus LoadELF @mpfs-mmuart-interrupt.elf
 
 *** Test Cases ***
-Should Fail Test Case
+Should Pass Test Case
     [Timeout]    300
     Create Machine
     Create Terminal Tester    ${UART}
